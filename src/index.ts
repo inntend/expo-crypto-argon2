@@ -18,8 +18,11 @@ export interface Argon2Params {
 }
 
 /** Mirrors hash-wasm's conditional return type. */
-type Argon2ReturnType<T extends Argon2Params> =
-  T extends { outputType: 'binary' } ? Uint8Array : string;
+type Argon2ReturnType<T extends Argon2Params> = T extends {
+  outputType: 'binary';
+}
+  ? Uint8Array
+  : string;
 
 const ExpoCryptoArgon2 = requireNativeModule('ExpoCryptoArgon2');
 
@@ -37,7 +40,7 @@ export async function argon2id<T extends Argon2Params>(
     password: toHex(params.password),
     salt: toHex(params.salt),
     iterations: params.iterations,
-    memory: params.memorySize,  // native record field is still named 'memory'
+    memory: params.memorySize, // native record field is still named 'memory'
     parallelism: params.parallelism,
     hashLength: params.hashLength,
     outputType,
@@ -58,7 +61,7 @@ function toHex(data: IDataType): string {
 }
 
 function uint8ArrayToHex(arr: Uint8Array): string {
-  return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+  return Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function hexToUint8Array(hex: string): Uint8Array {
