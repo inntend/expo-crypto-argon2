@@ -1,0 +1,16 @@
+node_modules/
+build/
+*.tsbuildinfo
+
+# Android
+android/.gradle/
+android/build/
+android/.cxx/
+
+# iOS
+ios/build/
+*.xcworkspace/
+Pods/
+
+# macOS
+.DS_Store
