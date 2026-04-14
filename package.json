@@ -2,10 +2,11 @@
   "name": "expo-crypto-argon2",
   "version": "0.1.0",
   "description": "Argon2id key derivation function for React Native via Expo Modules",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "types": "build/index.d.ts",
   "files": [
-    "src",
+    "build",
     "ios",
     "android",
     "c-argon2/src",
@@ -17,7 +18,12 @@
     "validate": "pnpm run check && pnpm run build:check",
     "check": "biome check --write",
     "check:ci": "biome ci",
-    "build:check": "tsc --noEmit true"
+    "build:check": "tsc --noEmit true",
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "expo": ">=51.0.0",
+    "expo-modules-core": ">=1.12.0"
   },
   "keywords": [
     "react-native",
