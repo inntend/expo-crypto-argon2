@@ -19,7 +19,7 @@
     "npm": "=10.x",
     "node": "=24.x"
   },
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@11.1.1",
   "scripts": {
     "validate": "pnpm run check && pnpm run build:check",
     "check": "biome check --write",
@@ -29,8 +29,8 @@
     "prepublishOnly": "git submodule update --init --recursive"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.11",
-    "typescript": "^6.0.2"
+    "@biomejs/biome": "^2.4.15",
+    "typescript": "^6.0.3"
   },
   "keywords": [
     "react-native",
