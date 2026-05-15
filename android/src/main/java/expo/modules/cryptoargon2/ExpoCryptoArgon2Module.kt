@@ -12,7 +12,6 @@ class Argon2Params : Record {
     @Field val memory: Int = 65536
     @Field val parallelism: Int = 1
     @Field val hashLength: Int = 32
-    @Field val outputType: String = "binary"  // "binary" | "encoded"
 }
 
 class ExpoCryptoArgon2Module : Module() {
@@ -31,8 +30,7 @@ class ExpoCryptoArgon2Module : Module() {
         memory: Int,
         parallelism: Int,
         hashLength: Int,
-        outputType: String
-    ): String
+    ): ByteArray
 
     override fun definition() = ModuleDefinition {
         Name("ExpoCryptoArgon2")
@@ -47,7 +45,6 @@ class ExpoCryptoArgon2Module : Module() {
                 params.memory,
                 params.parallelism,
                 params.hashLength,
-                params.outputType
             )
         }
     }

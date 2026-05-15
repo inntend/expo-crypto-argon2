@@ -36,38 +36,49 @@ export async function argon2id<T extends Argon2Params>(
 
   const outputType = params.outputType ?? 'hex';
 
-  const result: string = await ExpoCryptoArgon2.argon2id({
+  // Native always returns raw bytes (Uint8Array). Output conversion happens here.
+  const hashBytes: Uint8Array = await ExpoCryptoArgon2.argon2id({
     password: toHex(params.password),
     salt: toHex(params.salt),
     iterations: params.iterations,
-    memory: params.memorySize, // native record field is still named 'memory'
+    memory: params.memorySize,
     parallelism: params.parallelism,
     hashLength: params.hashLength,
-    outputType,
   });
 
-  // Native returns a hex string for 'hex'/'binary', PHC string for 'encoded'
   if (outputType === 'binary') {
-    return hexToUint8Array(result) as Argon2ReturnType<T>;
+    return hashBytes as Argon2ReturnType<T>;
   }
-  return result as Argon2ReturnType<T>;
+  if (outputType === 'encoded') {
+    const saltBytes = toBytes(params.salt);
+    const encoded = `$argon2id$v=19$m=${params.memorySize},t=${params.iterations},p=${params.parallelism}$${toBase64url(saltBytes)}$${toBase64url(hashBytes)}`;
+    return encoded as Argon2ReturnType<T>;
+  }
+  return uint8ArrayToHex(hashBytes) as Argon2ReturnType<T>;
+}
+
+function toBytes(data: IDataType): Uint8Array {
+  if (typeof data === 'string') {
+    return new TextEncoder().encode(data);
+  }
+  return data;
 }
 
 function toHex(data: IDataType): string {
-  if (typeof data === 'string') {
-    return uint8ArrayToHex(new TextEncoder().encode(data));
-  }
-  return uint8ArrayToHex(data);
+  return uint8ArrayToHex(toBytes(data));
 }
 
 function uint8ArrayToHex(arr: Uint8Array): string {
   return Array.from(arr, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-function hexToUint8Array(hex: string): Uint8Array {
-  const bytes = new Uint8Array(hex.length >> 1);
+function toBase64url(bytes: Uint8Array): string {
+  let binary = '';
   for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    binary += String.fromCharCode(bytes[i]);
   }
-  return bytes;
+  return btoa(binary)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
 }
