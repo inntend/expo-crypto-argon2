@@ -10,6 +10,9 @@ Argon2id bindings for Expo apps — native (iOS/Android) implementation of the [
 - **Native execution** — runs C argon2 directly on iOS (Swift/ObjC++) and Android (Kotlin/JNI), off the JS thread
 - **Three output formats** — `hex` string, raw `binary` (Uint8Array), or PHC-encoded string
 - **String or binary inputs** — `password` and `salt` accept `string` (UTF-8) or `Uint8Array`
+- **Non-blocking** — hashing runs on a background queue (iOS) / background executor (Android); the JS thread is never blocked
+- **Native memory zeroed** — both native implementations explicitly zero sensitive buffers after hashing; the raw bytes cross the bridge once and JS converts to the requested format — JS-side strings (`hex`, `encoded`) cannot be zeroed, so use `binary` if you need to control the hash lifetime in memory
+- **Fully typed** — return type is narrowed by `outputType` at compile time (`'binary'` → `Uint8Array`, `'hex' | 'encoded'` → `string`), so no casting needed
 - **Web not supported** — iOS and Android only
 - **`secret` parameter not yet implemented** — throws if provided
 
@@ -37,7 +40,7 @@ const hash = await argon2id({
   outputType: 'hex',  // → string
 });
 
-// Binary output
+// Binary output — native returns raw bytes, returned as-is
 const bytes = await argon2id({
   password: new Uint8Array([...]),
   salt: new Uint8Array([...]),

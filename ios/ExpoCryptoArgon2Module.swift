@@ -8,7 +8,6 @@ struct Argon2Params: Record {
     @Field var memory: Int = 65536
     @Field var parallelism: Int = 1
     @Field var hashLength: Int = 32
-    @Field var outputType: String = "binary"   // "binary" | "encoded"
 }
 
 public class ExpoCryptoArgon2Module: Module {
@@ -21,16 +20,15 @@ public class ExpoCryptoArgon2Module: Module {
             DispatchQueue.global(qos: .userInitiated).async {
                 // Swift bridges ObjC `NSError **` as a throwing function — use try/catch.
                 do {
-                    let hex = try Argon2Wrapper.argon2id(
+                    let data = try Argon2Wrapper.argon2id(
                         withPassword: params.password,
                         salt: params.salt,
                         iterations: params.iterations,
                         memory: params.memory,
                         parallelism: params.parallelism,
-                        hashLength: params.hashLength,
-                        outputType: params.outputType
+                        hashLength: params.hashLength
                     )
-                    promise.resolve(hex)
+                    promise.resolve(data)
                 } catch {
                     promise.reject(error)
                 }
