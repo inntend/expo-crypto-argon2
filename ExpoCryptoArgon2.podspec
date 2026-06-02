@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   # Source is set by the consuming app (local path or git URL)
   s.source         = { git: '' }
 
-  # ExpoModulesCore is injected by expo autolinking — no static dependency needed.
+  s.dependency 'ExpoModulesCore'
 
   # Swift module + ObjC++ C bridge + phc-winner-argon2 C sources
   # Exclude src/run.c — it defines its own main() (CLI entry point)
