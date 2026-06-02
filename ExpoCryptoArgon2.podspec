@@ -9,12 +9,12 @@ Pod::Spec.new do |s|
   s.license        = { type: package['license'] }
   s.homepage       = 'https://github.com/inntend/expo-crypto-argon2'
   s.authors        = 'expo-crypto-argon2 contributors'
-  s.platform       = :ios, '13.4'
+  s.platform       = :ios, '16.4'
   s.swift_version  = '5.4'
   # Source is set by the consuming app (local path or git URL)
   s.source         = { git: '' }
 
-  s.dependency 'ExpoModulesCore'
+  # ExpoModulesCore is injected by expo autolinking — no static dependency needed.
 
   # Swift module + ObjC++ C bridge + phc-winner-argon2 C sources
   # Exclude src/run.c — it defines its own main() (CLI entry point)
