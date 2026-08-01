@@ -8,6 +8,14 @@ updates:
     directory: /
     schedule:
       interval: weekly
+
+    # pnpm refuses lockfile entries younger than minimumReleaseAge (1440
+    # minutes by default in pnpm 11), so a PR raised the moment a version
+    # lands fails validate at install. Keep this comfortably above that
+    # window so Dependabot only proposes versions pnpm will already accept.
+    cooldown:
+      default-days: 3
+
     groups:
       dependencies:
         patterns:
