@@ -1,6 +1,3 @@
-> [!CAUTION]
-> This repo is a very early experiment and everything in here is fragile and subject to change. Use at your own risk.
-
 # expo-crypto-argon2
 
 Argon2id bindings for Expo apps — native (iOS/Android) implementation of the [phc-winner-argon2](https://github.com/P-H-C/phc-winner-argon2) reference implementation via Expo Modules.
