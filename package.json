@@ -19,7 +19,7 @@
     "npm": "=10.x",
     "node": "=24.x"
   },
-  "packageManager": "pnpm@11.22.0",
+  "packageManager": "pnpm@12.16.1",
   "scripts": {
     "validate": "pnpm run check && pnpm run build:check && pnpm run test:coverage",
     "check": "biome check --write",
@@ -31,11 +31,11 @@
     "prepublishOnly": "git submodule update --init --recursive"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.2",
-    "@vitest/coverage-v8": "^5.0.0",
-    "typescript": "^7.0.2",
-    "vite": "^8.1.3",
-    "vitest": "^5.0.0"
+    "@biomejs/biome": "^2.6.4",
+    "@vitest/coverage-v8": "^5.0.5",
+    "typescript": "6.0.3",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   },
   "keywords": [
     "react-native",
