@@ -64,25 +64,25 @@ const encoded = await argon2id({
 ## API
 
 ```typescript
-function argon2id(params: Argon2Params): Promise<string | Uint8Array>
+function argon2id(params: Argon2Params): Promise<string | Uint8Array>;
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `password` | `string \| Uint8Array` | The password or data to hash |
-| `salt` | `string \| Uint8Array` | Salt — should be unique per credential (min 16 bytes recommended) |
-| `iterations` | `number` | Number of passes over memory |
-| `memorySize` | `number` | Memory cost in KiB (e.g. `65536` = 64 MiB) |
-| `parallelism` | `number` | Number of parallel threads |
-| `hashLength` | `number` | Output length in bytes |
-| `outputType` | `'hex' \| 'binary' \| 'encoded'` | Output format (default: `'hex'`) |
+| Parameter     | Type                             | Description                                                       |
+| ------------- | -------------------------------- | ----------------------------------------------------------------- |
+| `password`    | `string \| Uint8Array`           | The password or data to hash                                      |
+| `salt`        | `string \| Uint8Array`           | Salt — should be unique per credential (min 16 bytes recommended) |
+| `iterations`  | `number`                         | Number of passes over memory                                      |
+| `memorySize`  | `number`                         | Memory cost in KiB (e.g. `65536` = 64 MiB)                        |
+| `parallelism` | `number`                         | Number of parallel threads                                        |
+| `hashLength`  | `number`                         | Output length in bytes                                            |
+| `outputType`  | `'hex' \| 'binary' \| 'encoded'` | Output format (default: `'hex'`)                                  |
 
 Return type is narrowed by `outputType`: `'binary'` → `Uint8Array`, otherwise `string`.
 
 ## Platform support
 
-| Platform | Min version | Backend |
-|----------|-------------|---------|
-| iOS | 13.4+ | Swift + ObjC++ (background queue) |
-| Android | API 23+ | Kotlin + JNI C++ (background executor) |
-| Web | — | Not supported |
+| Platform | Min version | Backend                                |
+| -------- | ----------- | -------------------------------------- |
+| iOS      | 13.4+       | Swift + ObjC++ (background queue)      |
+| Android  | API 23+     | Kotlin + JNI C++ (background executor) |
+| Web      | —           | Not supported                          |

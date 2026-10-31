@@ -3,10 +3,10 @@ name: Release
 on:
   push:
     # Trigger on any tag
-    tags: [ '*' ]
+    tags: [ "*" ]
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write # Required for OIDC
   contents: read
 
 jobs:
