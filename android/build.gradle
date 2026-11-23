@@ -1,52 +1,29 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'expo-modules-android-gradle-plugin'
-
-def safeExtGet(prop, fallback) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
 }
+
+group = 'expo.modules.cryptoargon2'
+// Expo's module plugin requires one. The release writes the tag's version into
+// package.json, so it is read from there rather than kept here by hand.
+version = new groovy.json.JsonSlurper().parse(file('../package.json')).version
 
 android {
-    namespace "expo.modules.cryptoargon2"
-    compileSdkVersion safeExtGet("compileSdkVersion", 34)
+  namespace "expo.modules.cryptoargon2"
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
-    defaultConfig {
-        minSdkVersion safeExtGet("minSdkVersion", 23)
-        targetSdkVersion safeExtGet("targetSdkVersion", 34)
-
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++17"
-                arguments "-DANDROID_STL=c++_shared"
-            }
-        }
-
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-        }
-    }
-
+  defaultConfig {
     externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-            version "3.22.1"
-        }
+      cmake {
+        cppFlags "-std=c++17"
+        arguments "-DANDROID_STL=c++_shared"
+      }
     }
-}
+  }
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation project(':expo-modules-core')
+  externalNativeBuild {
+    cmake {
+      path "CMakeLists.txt"
+      version "3.22.1"
+    }
+  }
 }
